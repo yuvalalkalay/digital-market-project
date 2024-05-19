@@ -2,14 +2,11 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    static final int ARRAY_SIZE_SALERS = 10;
-    static int logicSizeSalers = 0;
+    static int ARRAY_SIZE_SALERS = 0;
     static String[] salersNames = new String[ARRAY_SIZE_SALERS];
 
-    static final int ARRAY_SIZE_BUYERS = 10;
-    static int logicSizeBuyers = 0;
+    static int ARRAY_SIZE_BUYERS = 0;
     static String[] buyersNames = new String[ARRAY_SIZE_BUYERS];
-
 
     static void addBuyer(){
         boolean b = false;
@@ -22,21 +19,20 @@ public class Main {
             }
             System.out.println("enter buyer name: ");
             name = nameInput.nextLine();
-            for(int i = 0; i < logicSizeBuyers; i++){
-                System.out.println("buyers names: "+buyersNames[i]);
-                System.out.println(name);
+            for(int i = 0; i < ARRAY_SIZE_SALERS; i++){
                 if(name.equals(buyersNames[i])) { // change it to foreach function in the futcher.
                     b = true;
-                    i = logicSizeBuyers;
+                    i = ARRAY_SIZE_SALERS;
                 }
             }
         }while(b);
-        buyersNames[logicSizeBuyers] = name;
-        logicSizeBuyers++;
+        buyersNames = Arrays.copyOf(buyersNames, ARRAY_SIZE_BUYERS+1);
+        buyersNames[ARRAY_SIZE_BUYERS-1] = name;
+        ARRAY_SIZE_BUYERS++;
         System.out.println(Arrays.toString(buyersNames));
     }
 
-    static void addSaler(){
+    static void addSeller(){
         boolean b = false;
         String name = "";
         Scanner nameInput = new Scanner(System.in);
@@ -45,37 +41,40 @@ public class Main {
                 System.out.println("the name you choose exists in the system");
                 b = false;
             }
-            System.out.println("enter saler name: ");
+            System.out.println("enter seller name: ");
             name = nameInput.nextLine();
-            for(int i = 0; i < logicSizeSalers; i++){
-                System.out.println("salers names: "+salersNames[i]);
-                System.out.println(name);
-                if(name.equals(salersNames[i])) { // change it to foreach function in the futcher.
+            for(int i = 0; i < ARRAY_SIZE_SALERS; i++){
+                if(name.equals(salersNames[i])) { // change it to foreach function in the future.
                     b = true;
-                    i = logicSizeSalers;
+                    i = ARRAY_SIZE_SALERS;
                 }
             }
         }while(b);
-        salersNames[logicSizeSalers] = name;
-        logicSizeSalers++;
+        salersNames = Arrays.copyOf(salersNames, ARRAY_SIZE_SALERS + 1);
+        salersNames[salersNames.length - 1] = name;
+        ARRAY_SIZE_SALERS++;
         System.out.println(Arrays.toString(salersNames));
     }
 
-    static void addProductToSaler(){
+    static void addProductToSeller(){
         Scanner s = new Scanner(System.in);
-        System.out.print("enter saler name: ");
-        String salerName = s.nextLine();
+        System.out.print("enter seller name: ");
+        String sellerName = s.nextLine();
         System.out.print("enter product name: ");
         String product = s.nextLine();
+        System.out.print("enter product price: ");
+        String price = s.nextLine();
+        System.out.print("enter product category: ");
+        String category = s.nextLine();
     }
 
     static void addProductToBuyer(){
         Scanner s = new Scanner(System.in);
         System.out.print("enter buyer name: ");
         String buyerName = s.nextLine();
-        System.out.print("enter saler name: ");
-        String salerName = s.nextLine();
-        System.out.print("enter product name: ");
+        System.out.print("from which seller would you like to buy: ");
+        String sellerName = s.nextLine();
+        System.out.print("what product would you like to buy: ");
         String product = s.nextLine();
     }
 
@@ -89,7 +88,7 @@ public class Main {
         System.out.println(Arrays.toString(buyersNames));
     }
 
-    static void showSalersData(){
+    static void showSellersData(){
         System.out.println(Arrays.toString(salersNames));
     }
 
@@ -101,13 +100,13 @@ public class Main {
                 isMainRunning = false;
                 break;
             case 1: // add saler to the salers array.
-                addSaler();
+                addSeller();
                 break;
             case 2: // add buyer to the buyer array.
                 addBuyer();
                 break;
             case 3: // add product to saler.
-                addProductToSaler();
+                addProductToSeller();
                 break;
             case 4: // add product to buyer.
                 addProductToBuyer();
@@ -119,7 +118,7 @@ public class Main {
                 showBuyersData();
                 break;
             case 7: // show all data of all salers.
-                showSalersData();
+                showSellersData();
                 break;
         }
     }
