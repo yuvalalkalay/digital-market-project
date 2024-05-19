@@ -2,10 +2,15 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    static int ARRAY_SIZE_SALERS = 0;
-    static String[] salersNames = new String[ARRAY_SIZE_SALERS];
+    static  boolean isMainRunning = true;
+
+    static int ARRAY_SIZE_SELLERS = 0;
+    static  int LOGIC_SIZE_SELLERS = 0;
+    static String[] sellersNames = new String[ARRAY_SIZE_SELLERS];
+
 
     static int ARRAY_SIZE_BUYERS = 0;
+    static int LOGIC_SIZE_BUYERS = 0;
     static String[] buyersNames = new String[ARRAY_SIZE_BUYERS];
 
     static void addBuyer(){
@@ -19,17 +24,23 @@ public class Main {
             }
             System.out.println("enter buyer name: ");
             name = nameInput.nextLine();
-            for(int i = 0; i < ARRAY_SIZE_SALERS; i++){
+            for(int i = 0; i < ARRAY_SIZE_SELLERS; i++){
                 if(name.equals(buyersNames[i])) { // change it to foreach function in the futcher.
                     b = true;
-                    i = ARRAY_SIZE_SALERS;
+                    i = ARRAY_SIZE_SELLERS;
                 }
             }
         }while(b);
-        buyersNames = Arrays.copyOf(buyersNames, ARRAY_SIZE_BUYERS+1);
-        buyersNames[ARRAY_SIZE_BUYERS-1] = name;
-        ARRAY_SIZE_BUYERS++;
-        System.out.println(Arrays.toString(buyersNames));
+        if (ARRAY_SIZE_BUYERS==0) {
+            ARRAY_SIZE_BUYERS++;
+            buyersNames = Arrays.copyOf(buyersNames, ARRAY_SIZE_BUYERS);
+        }
+        else {
+            ARRAY_SIZE_BUYERS = ARRAY_SIZE_BUYERS * 2;
+            buyersNames = Arrays.copyOf(buyersNames, ARRAY_SIZE_BUYERS);
+        }
+        buyersNames[LOGIC_SIZE_BUYERS] = name;
+        LOGIC_SIZE_BUYERS++;
     }
 
     static void addSeller(){
@@ -43,17 +54,23 @@ public class Main {
             }
             System.out.println("enter seller name: ");
             name = nameInput.nextLine();
-            for(int i = 0; i < ARRAY_SIZE_SALERS; i++){
-                if(name.equals(salersNames[i])) { // change it to foreach function in the future.
+            for(int i = 0; i < ARRAY_SIZE_SELLERS; i++){
+                if(name.equals(sellersNames[i])) { // change it to foreach function in the future.
                     b = true;
-                    i = ARRAY_SIZE_SALERS;
+                    i = ARRAY_SIZE_SELLERS;
                 }
             }
         }while(b);
-        salersNames = Arrays.copyOf(salersNames, ARRAY_SIZE_SALERS + 1);
-        salersNames[salersNames.length - 1] = name;
-        ARRAY_SIZE_SALERS++;
-        System.out.println(Arrays.toString(salersNames));
+        if (ARRAY_SIZE_SELLERS==0) {
+            ARRAY_SIZE_SELLERS++;
+            sellersNames = Arrays.copyOf(sellersNames, ARRAY_SIZE_SELLERS);
+        }
+        else {
+            ARRAY_SIZE_SELLERS = ARRAY_SIZE_SELLERS * 2;
+            sellersNames = Arrays.copyOf(sellersNames, ARRAY_SIZE_SELLERS);
+        }
+        sellersNames[LOGIC_SIZE_SELLERS] = name;
+        LOGIC_SIZE_SELLERS++;
     }
 
     static void addProductToSeller(){
@@ -85,41 +102,57 @@ public class Main {
     }
 
     static void showBuyersData(){
-        System.out.println(Arrays.toString(buyersNames));
+        if(LOGIC_SIZE_BUYERS > 0){
+            for(int i = 0; i < LOGIC_SIZE_BUYERS; i++){
+                System.out.println(buyersNames[i]);
+            }
+        }else{
+                System.out.println("no buyer yet.");
+            }
     }
 
     static void showSellersData(){
-        System.out.println(Arrays.toString(salersNames));
+        if(LOGIC_SIZE_SELLERS > 0){
+            for(int i = 0; i < LOGIC_SIZE_SELLERS; i++){
+                System.out.println(sellersNames[i]);
+            }
+        }else{
+            System.out.println("no seller yet.");
+        }
+
     }
 
-    static  boolean isMainRunning = true;
-
     static void operation(int selection){
-        switch (selection){
-            case 0: // exit the program.
-                isMainRunning = false;
-                break;
-            case 1: // add saler to the salers array.
-                addSeller();
-                break;
-            case 2: // add buyer to the buyer array.
-                addBuyer();
-                break;
-            case 3: // add product to saler.
-                addProductToSeller();
-                break;
-            case 4: // add product to buyer.
-                addProductToBuyer();
-                break;
-            case 5: // payment for buyer.
-                payment();
-                break;
-            case 6: // show all data of all buyers.
-                showBuyersData();
-                break;
-            case 7: // show all data of all salers.
-                showSellersData();
-                break;
+        if(selection>=0 && selection<=7){
+            switch (selection) {
+                case 0: // exit the program.
+                    isMainRunning = false;
+                    break;
+                case 1: // add saler to the salers array.
+                    addSeller();
+                    break;
+                case 2: // add buyer to the buyer array.
+                    addBuyer();
+                    break;
+                case 3: // add product to saler.
+                    addProductToSeller();
+                    break;
+                case 4: // add product to buyer.
+                    addProductToBuyer();
+                    break;
+                case 5: // payment for buyer.
+                    payment();
+                    break;
+                case 6: // show all data of all buyers.
+                    showBuyersData();
+                    break;
+                case 7: // show all data of all salers.
+                    showSellersData();
+                    break;
+            }
+        }
+        else{
+            System.out.println("please eneter a valid number of selection");
         }
     }
 
@@ -134,6 +167,7 @@ public class Main {
             System.out.println("5 : payment for buyer");
             System.out.println("6 : show all buyers information");
             System.out.println("7 : show all salers information");
+            System.out.print("please eneter a number of selection from the menu: ");
             int select = s.nextInt();
             operation(select);
         }while(isMainRunning);
