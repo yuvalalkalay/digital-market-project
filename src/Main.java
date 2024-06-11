@@ -7,92 +7,67 @@ import java.util.Scanner;
 public class Main {
     // Flag to keep the main loop running
     static boolean isMainRunning = true;
-
+    static SingleSourceOfTruth data = new SingleSourceOfTruth();
+    static Scanner s = new Scanner(System.in);
     // Variables for sellers' names array and their sizes
     static int arraySizeSellers = 0; // Physical size of the sellers array
     static int logicSizeSellers = 0; // Logical number of sellers currently in the array
     static String[] sellersNames = new String[arraySizeSellers]; // Array to store sellers' names
 
-    // Variables for buyers' names array and their sizes
-    static int arraySizeBuyers = 0; // Physical size of the buyers array
-    static int logicSizeBuyers = 0; // Logical number of buyers currently in the array
-    static String[] buyersNames = new String[arraySizeBuyers]; // Array to store buyers' names
-
     // Function to add a new buyer to the system
     static void addBuyer() {
         boolean nameExists = false; // Flag to check if the buyer name already exists
         String name = "";
-        Scanner nameInput = new Scanner(System.in);
+        System.out.println("Enter buyer name: ");
+        name = s.nextLine();
 
-        // Loop to ensure a unique buyer name is entered
-        do {
-            if (nameExists) {
-                System.out.println("The name you chose exists in the system");
-                nameExists = false;
-            }
+        while(data.isBuyerExist(name)){ // Loop to ensure a unique buyer name is entered
+            System.out.println("The name you chose exists in the system");
             System.out.println("Enter buyer name: ");
-            name = nameInput.nextLine();
-            for (int i = 0; i < logicSizeBuyers; i++) {
-                if (name.equals(buyersNames[i])) { // Check if the name already exists
-                    nameExists = true;
-                    break;
-                }
-            }
-        } while (nameExists);
-
-        // Increase the size of the buyers array if needed
-        if (arraySizeBuyers == 0) {
-            arraySizeBuyers++;
-            buyersNames = Arrays.copyOf(buyersNames, arraySizeBuyers);
-        } else {
-            arraySizeBuyers = arraySizeBuyers * 2;
-            buyersNames = Arrays.copyOf(buyersNames, arraySizeBuyers);
+            name = s.nextLine();
         }
+        String city;
+        String street;
+        String passWord;
+        int houseNumber;
 
-        // Add the new buyer's name to the array and increment the logical size
-        buyersNames[logicSizeBuyers] = name;
-        logicSizeBuyers++;
+        System.out.println("craete password: ");
+        passWord = s.nextLine();
+        System.out.println("address");
+        System.out.println("enter city: ");
+        city = s.nextLine();
+        System.out.println("enter street: ");
+        street = s.nextLine();
+        System.out.println("enter house number: ");
+        houseNumber = s.nextInt();
+        Address a = new Address(city, street, houseNumber);
+        Buyer b = new Buyer(name, passWord, a);
+        data.addBuyer(b);
     }
 
     // Function to add a new seller to the system
     static void addSeller() {
-        boolean nameExists = false; // Flag to check if the seller name already exists
         String name = "";
-        Scanner nameInput = new Scanner(System.in);
+        System.out.println("Enter seller name: ");
+        name = s.nextLine();
 
-        // Loop to ensure a unique seller name is entered
-        do {
-            if (nameExists) {
-                System.out.println("The name you chose exists in the system");
-                nameExists = false;
-            }
+        while(data.isBuyerExist(name)){ // Loop to ensure a unique buyer name is entered
+            System.out.println("The name you chose exists in the system");
             System.out.println("Enter seller name: ");
-            name = nameInput.nextLine();
-            for (int i = 0; i < logicSizeSellers; i++) {
-                if (name.equals(sellersNames[i])) { // Check if the name already exists
-                    nameExists = true;
-                    break;
-                }
-            }
-        } while (nameExists);
-
-        // Increase the size of the sellers array if needed
-        if (arraySizeSellers == 0) {
-            arraySizeSellers++;
-            sellersNames = Arrays.copyOf(sellersNames, arraySizeSellers);
-        } else {
-            arraySizeSellers = arraySizeSellers * 2;
-            sellersNames = Arrays.copyOf(sellersNames, arraySizeSellers);
+            name = s.nextLine();
         }
 
-        // Add the new seller's name to the array and increment the logical size
-        sellersNames[logicSizeSellers] = name;
-        logicSizeSellers++;
+        String passWord;
+
+        System.out.println("craete password: ");
+        passWord = s.nextLine();
+
+        Seller seller = new Seller(name, passWord);
+        data.addSeller(seller);
     }
 
     // Function to add a product to a seller (implementation incomplete)
     static void addProductToSeller() {
-        Scanner s = new Scanner(System.in);
         System.out.print("Enter seller name: ");
         String sellerName = s.nextLine();
         System.out.print("Enter product name: ");
@@ -107,7 +82,6 @@ public class Main {
 
     // Function to add a product to a buyer (implementation incomplete)
     static void addProductToBuyer() {
-        Scanner s = new Scanner(System.in);
         System.out.print("Enter buyer name: ");
         String buyerName = s.nextLine();
         System.out.print("From which seller would you like to buy: ");
@@ -129,9 +103,9 @@ public class Main {
 
     // Function to display all buyers' data
     static void showBuyersData() {
-        if (logicSizeBuyers > 0) { // Check if there are any buyers
-            for (int i = 0; i < logicSizeBuyers; i++) {
-                System.out.println(buyersNames[i]); // Print each buyer's name
+        if (data.buyers.length > 0) { // Check if there are any buyers
+            for (int i = 0; i < data.buyers.length; i++) {
+                System.out.println(data.buyers[i].toString()); // Print each buyer's name
             }
         } else {
             System.out.println("No buyer yet.");
@@ -140,12 +114,12 @@ public class Main {
 
     // Function to display all sellers' data
     static void showSellersData() {
-        if (logicSizeSellers > 0) { // Check if there are any sellers
-            for (int i = 0; i < logicSizeSellers; i++) {
-                System.out.println(sellersNames[i]); // Print each seller's name
+        if (data.sellers.length > 0) { // Check if there are any buyers
+            for (int i = 0; i < data.sellers.length; i++) {
+                System.out.println(data.sellers[i].toString()); // Print each buyer's name
             }
         } else {
-            System.out.println("No seller yet.");
+            System.out.println("No buyer yet.");
         }
     }
 
