@@ -4,7 +4,7 @@ public class Product {
 
     public Product() {
     }
-    public Product(String mame, int price) {
+    public Product(String name, int price) {
         this.price = price;
         this.name = name;
     }
@@ -23,5 +23,10 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString(){
+        return "Product{" + "name='" + name + '\'' + ", price= '" + price + '\'' + "}";
     }
 }

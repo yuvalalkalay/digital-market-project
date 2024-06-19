@@ -47,6 +47,7 @@ public class Seller {
         return "Seller{" +
                 "name='" + name + '\'' +
                 ", passWord='" + passWord + '\''+
+                ", products='" +Arrays.toString(products)+ '\'' +
                 '}';
     }
 }

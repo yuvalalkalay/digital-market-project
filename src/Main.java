@@ -1,6 +1,5 @@
 // name: Yuval Alkalay  id: 207962770
 // name: Almog Dinur    id: 211627054
-
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -16,9 +15,8 @@ public class Main {
 
     // Function to add a new buyer to the system
     static void addBuyer() {
-        boolean nameExists = false; // Flag to check if the buyer name already exists
-        String name = "";
-        System.out.println("Enter buyer name: ");
+        String name;
+        System.out.print("Enter buyer name: ");
         name = s.nextLine();
 
         while(data.isBuyerExist(name)){ // Loop to ensure a unique buyer name is entered
@@ -26,20 +24,22 @@ public class Main {
             System.out.println("Enter buyer name: ");
             name = s.nextLine();
         }
+
+        String passWord;
         String city;
         String street;
-        String passWord;
         int houseNumber;
 
-        System.out.println("craete password: ");
+        System.out.print("create password: ");
         passWord = s.nextLine();
         System.out.println("address");
-        System.out.println("enter city: ");
+        System.out.print("enter city: ");
         city = s.nextLine();
-        System.out.println("enter street: ");
+        System.out.print("enter street: ");
         street = s.nextLine();
-        System.out.println("enter house number: ");
+        System.out.print("enter house number: ");
         houseNumber = s.nextInt();
+
         Address a = new Address(city, street, houseNumber);
         Buyer b = new Buyer(name, passWord, a);
         data.addBuyer(b);
@@ -47,8 +47,8 @@ public class Main {
 
     // Function to add a new seller to the system
     static void addSeller() {
-        String name = "";
-        System.out.println("Enter seller name: ");
+        String name;
+        System.out.print("Enter seller name: ");
         name = s.nextLine();
 
         while(data.isBuyerExist(name)){ // Loop to ensure a unique buyer name is entered
@@ -59,7 +59,7 @@ public class Main {
 
         String passWord;
 
-        System.out.println("craete password: ");
+        System.out.print("create password: ");
         passWord = s.nextLine();
 
         Seller seller = new Seller(name, passWord);
@@ -68,43 +68,67 @@ public class Main {
 
     // Function to add a product to a seller (implementation incomplete)
     static void addProductToSeller() {
-        System.out.print("Enter seller name: ");
-        String sellerName = s.nextLine();
+        for(int i = 0; i < data.sellers.length; i++){
+            System.out.println(i + ") " + data.sellers[i].name);
+        }
+        System.out.print("enter seller number: ");
+        int sellerNumber = s.nextInt();
+        s.nextLine();
+
         System.out.print("Enter product name: ");
         String product = s.nextLine();
-        System.out.print("Enter product price: ");
-        String price = s.nextLine();
-        System.out.print("Enter product category: ");
-        String category = s.nextLine();
 
-        // Note: The implementation to actually store and link products to the seller is not completed
+        System.out.print("Enter product price: ");
+        int price = s.nextInt();
+        s.nextLine();
+
+        Product newProduct = new Product(product, price);
+        data.sellers[sellerNumber].addProduct(newProduct);
     }
 
     // Function to add a product to a buyer (implementation incomplete)
     static void addProductToBuyer() {
-        System.out.print("Enter buyer name: ");
-        String buyerName = s.nextLine();
-        System.out.print("From which seller would you like to buy: ");
-        String sellerName = s.nextLine();
-        System.out.print("What product would you like to buy: ");
-        String product = s.nextLine();
+        for(int i = 0; i < data.buyers.length; i++){
+            System.out.println(i + ") " + data.buyers[i].name);
+        }
+        System.out.print("Enter buyer number: ");
+        int buyerNumber = s.nextInt();
 
-        // Note: The implementation to actually handle the purchase process is not completed
+        for(int i = 0; i < data.sellers.length; i++){
+            System.out.println(i + ") " + data.sellers[i].name);
+        }
+        System.out.print("enter seller number: ");
+        int sellerNumber = s.nextInt();
+
+        for(int i = 0; i < data.sellers[sellerNumber].products.length; i++){
+            System.out.println(i + ") " + data.sellers[sellerNumber].products[i].name + " " + data.sellers[sellerNumber].products[i].price + "$");
+        }
+        System.out.print("enter product number: ");
+        int productNumber = s.nextInt();
+        Product p = data.sellers[sellerNumber].products[productNumber];
+        data.buyers[buyerNumber].addProduct(p);
     }
 
     // Function to process payment for a buyer (implementation incomplete)
     static void payment() {
-        Scanner s = new Scanner(System.in);
-        System.out.print("Enter buyer name for payment: ");
-        String buyer = s.nextLine();
-
-        // Note: The implementation to actually handle the payment process is not completed
+        for(int i = 0; i < data.buyers.length; i++){
+            System.out.println(i + ") " + data.buyers[i].name);
+        }
+        System.out.print("Enter buyer number for payment: ");
+        int buyerNumber = s.nextInt();
+        System.out.println("buyer name: " + data.buyers[buyerNumber].name);
+        System.out.println("your total payment is: " + data.buyers[buyerNumber].paymentPrice() + "$");
+        Product[] cart = data.buyers[buyerNumber].getProducts();
+        data.buyers[buyerNumber].addPaymentHistory(cart);
+        Product[] newCart = new Product[0];
+        data.buyers[buyerNumber].setProducts(newCart);
     }
 
     // Function to display all buyers' data
     static void showBuyersData() {
         if (data.buyers.length > 0) { // Check if there are any buyers
             for (int i = 0; i < data.buyers.length; i++) {
+                System.out.println(data.buyers[i].name + " :");
                 System.out.println(data.buyers[i].toString()); // Print each buyer's name
             }
         } else {
