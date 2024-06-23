@@ -44,10 +44,8 @@ public class Seller {
 
     @Override
     public String toString(){
-        return "Seller{" +
-                "name='" + name + '\'' +
-                ", passWord='" + passWord + '\''+
-                ", products='" +Arrays.toString(products)+ '\'' +
-                '}';
+        return  "seller name='" + name + '\'' + "\n" +
+                "passWord='" + passWord + '\''+"\n"+
+                "products='" +Arrays.toString(products)+ '\'' + "\n";
     }
 }

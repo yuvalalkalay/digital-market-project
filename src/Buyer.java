@@ -79,12 +79,10 @@ public class Buyer {
 
     @Override
     public String toString(){
-        return "Buyer{" +
-                "name='" + name + '\'' +
-                ", passWord='" + passWord + '\'' +
-                ", address='" + address +
-                ", products='" + Arrays.toString(products) +
-                ", PaymentHistory='" + Arrays.toString(PaymentHistory) + '\'' +
-                '}';
+        return  "Buyer name='" + name + '\'' + "\n" +
+                "passWord='" + passWord + '\'' + "\n" +
+                "address='" + address + "\n" +
+                "products='" + Arrays.toString(products) + "\n" +
+                "PaymentHistory='" + Arrays.toString(PaymentHistory) + '\'' + "\n";
     }
 }

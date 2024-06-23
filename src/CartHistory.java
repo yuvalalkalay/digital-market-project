@@ -29,10 +29,9 @@ public class CartHistory {
 
     @Override
     public String toString(){
-        return "CartHistory{" +
-                ", time" + time + '\'' +
-                "products='" + Arrays.toString(products) + '\'' +
-                '}';
+        return "CartHistory: " + "\n" +
+                "time" + time + '\'' + "\n" +
+                "products='" + Arrays.toString(products) + '\'' + "\n";
     }
 
 }

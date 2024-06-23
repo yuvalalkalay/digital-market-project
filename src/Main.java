@@ -39,7 +39,7 @@ public class Main {
         street = s.nextLine();
         System.out.print("enter house number: ");
         houseNumber = s.nextInt();
-
+        s.nextLine();
         Address a = new Address(city, street, houseNumber);
         Buyer b = new Buyer(name, passWord, a);
         data.addBuyer(b);
