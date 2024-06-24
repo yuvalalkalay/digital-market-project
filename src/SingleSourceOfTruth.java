@@ -3,6 +3,10 @@ import java.util.Arrays;
 public class SingleSourceOfTruth {
     Buyer[] buyers = new Buyer[0];
     Seller[] sellers = new Seller[0];
+    private int logicSizeBuyers=0;
+    private int arraySizeBuyers=0;
+    private int logicSizeSellers=0;
+    private int arraySizeSellers=0;
 
     public SingleSourceOfTruth() {
     }
@@ -19,26 +23,61 @@ public class SingleSourceOfTruth {
         return sellers;
     }
 
-    public void setBuyers(Buyer[] buyers) {
+    public boolean setBuyers(Buyer[] buyers) {
         this.buyers = buyers;
+        return true;
     }
 
-    public void setSellers(Seller[] sellers) {
+    public boolean setSellers(Seller[] sellers) {
         this.sellers = sellers;
+        return true;
     }
 
     void addBuyer(Buyer buyer){
-        buyers = Arrays.copyOf(buyers, buyers.length + 1);
-        buyers[buyers.length - 1] = buyer;
+        if(arraySizeBuyers == 0) {
+            buyers = Arrays.copyOf(buyers, arraySizeBuyers + 1);
+            buyers[0] = buyer;
+            arraySizeBuyers++;
+        }
+        else{
+            if(logicSizeBuyers < arraySizeBuyers){
+                buyers[logicSizeBuyers] = buyer;
+
+            }
+            else {
+                buyers = Arrays.copyOf(buyers, arraySizeBuyers * 2);
+                arraySizeBuyers *= 2;
+                buyers[logicSizeBuyers] = buyer;
+            }
+        }
+        logicSizeBuyers++;
     }
 
     void addSeller(Seller seller){
-        sellers = Arrays.copyOf(sellers, sellers.length + 1);
-        sellers[sellers.length - 1] = seller;
+        if(arraySizeSellers == 0) {
+            sellers = Arrays.copyOf(sellers, arraySizeSellers + 1);
+            sellers[0] = seller;
+            arraySizeSellers++;
+        }
+        else{
+            if(logicSizeSellers < arraySizeSellers){
+                sellers[logicSizeSellers] = seller;
+
+            }
+            else {
+                sellers = Arrays.copyOf(sellers, arraySizeSellers * 2);
+                arraySizeSellers *= 2;
+                sellers[logicSizeSellers] = seller;
+            }
+        }
+        logicSizeSellers++;
     }
 
     boolean isBuyerExist(String name){
         for(int i = 0; i < buyers.length; i++){
+            if(buyers[i]==null) {
+                return false;
+            }
             if(buyers[i].name.equals(name)){
                 return true;
             }
@@ -48,6 +87,9 @@ public class SingleSourceOfTruth {
 
     boolean isSellerExist(String name){
         for(int i = 0; i < buyers.length; i++){
+            if(sellers[i]==null){
+                return false;
+            }
             if(sellers[i].name.equals(name)){
                 return true;
             }

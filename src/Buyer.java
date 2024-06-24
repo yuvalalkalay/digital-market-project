@@ -6,23 +6,18 @@ public class Buyer {
     Address address = new Address();
     Product[] products = new Product[0];
     CartHistory[] PaymentHistory = new CartHistory[0];
+    private int arraySizeProduct=0;
+    private int logicSizeProduct=0;
+    private int arraySizePaymentHistory=0;
+    private int logicSizePaymentHistory=0;
 
     public Buyer(){
 
     }
-
     public Buyer(String name, String passWord, Address address){
         this.name = name;
         this.passWord = passWord;
         this.address = address;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
     }
 
     public String getName() {
@@ -31,10 +26,6 @@ public class Buyer {
 
     public String getPassWord() {
         return passWord;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public Address getAddress() {
@@ -49,17 +40,49 @@ public class Buyer {
         return PaymentHistory;
     }
 
-    public void setProducts(Product[] products) {
-        this.products = products;
+    public boolean setName(String name) {
+        this.name = name;
+        return true;
     }
 
-    public void setPaymentHistory(CartHistory[] paymentHistory) {
+    public boolean setPassWord(String passWord) {
+        this.passWord = passWord;
+        return true;
+    }
+
+    public boolean setAddress(Address address) {
+        this.address = address;
+        return true;
+    }
+
+    public boolean setProducts(Product[] products) {
+        this.products = products;
+        return true;
+    }
+
+    public boolean setPaymentHistory(CartHistory[] paymentHistory) {
         PaymentHistory = paymentHistory;
+        return true;
     }
 
     void addProduct(Product product){
-        products = Arrays.copyOf(products, products.length + 1);
-        products[products.length-1] = product;
+        if(arraySizeProduct == 0) {
+            products = Arrays.copyOf(products, arraySizeProduct + 1);
+            products[0] = product;
+            arraySizeProduct++;
+        }
+        else{
+            if(logicSizeProduct < arraySizeProduct){
+                products[logicSizeProduct] = product;
+
+            }
+            else {
+                products = Arrays.copyOf(products, arraySizeProduct * 2);
+                arraySizeProduct *= 2;
+                products[logicSizeProduct] = product;
+            }
+        }
+        logicSizeProduct++;
     }
 
     double paymentPrice(){
@@ -73,8 +96,23 @@ public class Buyer {
     void addPaymentHistory(Product[] products){
 
         CartHistory history = new CartHistory(products);
-        PaymentHistory = Arrays.copyOf(PaymentHistory, PaymentHistory.length + 1);
-        PaymentHistory[PaymentHistory.length - 1] = history;
+        if(arraySizePaymentHistory == 0) {
+            PaymentHistory = Arrays.copyOf(PaymentHistory, arraySizePaymentHistory + 1);
+            PaymentHistory[0] = history;
+            arraySizePaymentHistory++;
+        }
+        else{
+            if(logicSizePaymentHistory < arraySizePaymentHistory){
+                PaymentHistory[logicSizePaymentHistory] = history;
+
+            }
+            else {
+                PaymentHistory = Arrays.copyOf(PaymentHistory, arraySizePaymentHistory * 2);
+                arraySizePaymentHistory *= 2;
+                PaymentHistory[logicSizePaymentHistory] = history;
+            }
+        }
+        logicSizePaymentHistory++;
     }
 
     @Override

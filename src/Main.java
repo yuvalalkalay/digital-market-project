@@ -1,6 +1,5 @@
 // name: Yuval Alkalay  id: 207962770
 // name: Almog Dinur    id: 211627054
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -8,10 +7,6 @@ public class Main {
     static boolean isMainRunning = true;
     static SingleSourceOfTruth data = new SingleSourceOfTruth();
     static Scanner s = new Scanner(System.in);
-    // Variables for sellers' names array and their sizes
-    static int arraySizeSellers = 0; // Physical size of the sellers array
-    static int logicSizeSellers = 0; // Logical number of sellers currently in the array
-    static String[] sellersNames = new String[arraySizeSellers]; // Array to store sellers' names
 
     // Function to add a new buyer to the system
     static void addBuyer() {
@@ -128,8 +123,12 @@ public class Main {
     static void showBuyersData() {
         if (data.buyers.length > 0) { // Check if there are any buyers
             for (int i = 0; i < data.buyers.length; i++) {
-                System.out.println(data.buyers[i].name + " :");
-                System.out.println(data.buyers[i].toString()); // Print each buyer's name
+                if(data.buyers[i] != null){
+                    System.out.println(data.buyers[i].name + " :");
+                    System.out.println(data.buyers[i].toString()); // Print each buyer's name
+                }else {
+                    i = data.buyers.length;
+                }
             }
         } else {
             System.out.println("No buyer yet.");
@@ -140,7 +139,11 @@ public class Main {
     static void showSellersData() {
         if (data.sellers.length > 0) { // Check if there are any buyers
             for (int i = 0; i < data.sellers.length; i++) {
-                System.out.println(data.sellers[i].toString()); // Print each buyer's name
+                if(data.sellers[i] != null){
+                    System.out.println(data.sellers[i].toString()); // Print each buyer's name
+                }else{
+                    i = data.sellers.length;
+                }
             }
         } else {
             System.out.println("No buyer yet.");
