@@ -1,5 +1,6 @@
 // name: Yuval Alkalay  id: 207962770
 // name: Almog Dinur    id: 211627054
+// we are both in pini shlomi's class
 import java.util.Scanner;
 
 public class Main {
@@ -46,7 +47,7 @@ public class Main {
         System.out.print("Enter seller name: ");
         name = s.nextLine();
 
-        while(data.isBuyerExist(name)){ // Loop to ensure a unique buyer name is entered
+        while(data.isSellerExist(name)){ // Loop to ensure a unique buyer name is entered
             System.out.println("The name you chose exists in the system");
             System.out.println("Enter seller name: ");
             name = s.nextLine();
@@ -63,8 +64,8 @@ public class Main {
 
     // Function to add a product to a seller (implementation incomplete)
     static void addProductToSeller() {
-        for(int i = 0; i < data.sellers.length; i++){
-            System.out.println(i + ") " + data.sellers[i].name);
+        for(int i = 1; i <= data.getSellers().length; i++){
+            System.out.println(i + ") " + data.getSellers()[i-1].getName());
         }
         System.out.print("enter seller number: ");
         int sellerNumber = s.nextInt();
@@ -78,56 +79,56 @@ public class Main {
         s.nextLine();
 
         Product newProduct = new Product(product, price);
-        data.sellers[sellerNumber].addProduct(newProduct);
+        data.getSellers()[sellerNumber-1].addProduct(newProduct);
     }
 
     // Function to add a product to a buyer (implementation incomplete)
     static void addProductToBuyer() {
-        for(int i = 0; i < data.buyers.length; i++){
-            System.out.println(i + ") " + data.buyers[i].name);
+        for(int i = 1; i <= data.getBuyers().length; i++){
+            System.out.println(i + ") " + data.getBuyers()[i - 1].getName());
         }
         System.out.print("Enter buyer number: ");
         int buyerNumber = s.nextInt();
 
-        for(int i = 0; i < data.sellers.length; i++){
-            System.out.println(i + ") " + data.sellers[i].name);
+        for(int i = 1; i <= data.getSellers().length; i++){
+            System.out.println(i + ") " + data.getSellers()[i - 1].getName());
         }
         System.out.print("enter seller number: ");
         int sellerNumber = s.nextInt();
 
-        for(int i = 0; i < data.sellers[sellerNumber].products.length; i++){
-            System.out.println(i + ") " + data.sellers[sellerNumber].products[i].name + " " + data.sellers[sellerNumber].products[i].price + "$");
+        for(int i = 1; i <= data.getSellers()[sellerNumber - 1].getProducts().length; i++){
+            System.out.println(i + ") " + data.getSellers()[sellerNumber - 1].getProducts()[i - 1].getName() + " " + data.getSellers()[sellerNumber - 1].getProducts()[i - 1].getPrice() + "$");
         }
         System.out.print("enter product number: ");
         int productNumber = s.nextInt();
-        Product p = data.sellers[sellerNumber].products[productNumber];
-        data.buyers[buyerNumber].addProduct(p);
+        Product p = data.getSellers()[sellerNumber - 1].getProducts()[productNumber-1];
+        data.getBuyers()[buyerNumber-1].addProduct(p);
     }
 
     // Function to process payment for a buyer (implementation incomplete)
     static void payment() {
-        for(int i = 0; i < data.buyers.length; i++){
-            System.out.println(i + ") " + data.buyers[i].name);
+        for(int i = 1; i <= data.getBuyers().length; i++){
+            System.out.println(i + ") " + data.getBuyers()[i - 1].getName());
         }
         System.out.print("Enter buyer number for payment: ");
         int buyerNumber = s.nextInt();
-        System.out.println("buyer name: " + data.buyers[buyerNumber].name);
-        System.out.println("your total payment is: " + data.buyers[buyerNumber].paymentPrice() + "$");
-        Product[] cart = data.buyers[buyerNumber].getProducts();
-        data.buyers[buyerNumber].addPaymentHistory(cart);
+        System.out.println("buyer name: " + data.getBuyers()[buyerNumber - 1].getName());
+        System.out.println("your total payment is: " + data.getBuyers()[buyerNumber-1].paymentPrice() + "$");
+        Product[] cart = data.getBuyers()[buyerNumber-1].getProducts();
+        data.getBuyers()[buyerNumber-1].addPaymentHistory(cart);
         Product[] newCart = new Product[0];
-        data.buyers[buyerNumber].setProducts(newCart);
+        data.getBuyers()[buyerNumber-1].setProducts(newCart);
     }
 
     // Function to display all buyers' data
     static void showBuyersData() {
-        if (data.buyers.length > 0) { // Check if there are any buyers
-            for (int i = 0; i < data.buyers.length; i++) {
-                if(data.buyers[i] != null){
-                    System.out.println(data.buyers[i].name + " :");
-                    System.out.println(data.buyers[i].toString()); // Print each buyer's name
+        if (data.getBuyers().length > 0) { // Check if there are any buyers
+            for (int i = 0; i < data.getBuyers().length; i++) {
+                if(data.getBuyers()[i] != null){
+                    System.out.println(data.getBuyers()[i].getName() + " :");
+                    System.out.println(data.getBuyers()[i].toString()); // Print each buyer's name
                 }else {
-                    i = data.buyers.length;
+                    i = data.getBuyers().length;
                 }
             }
         } else {
@@ -137,12 +138,12 @@ public class Main {
 
     // Function to display all sellers' data
     static void showSellersData() {
-        if (data.sellers.length > 0) { // Check if there are any buyers
-            for (int i = 0; i < data.sellers.length; i++) {
-                if(data.sellers[i] != null){
-                    System.out.println(data.sellers[i].toString()); // Print each buyer's name
+        if (data.getSellers().length > 0) { // Check if there are any buyers
+            for (int i = 0; i < data.getSellers().length; i++) {
+                if(data.getSellers()[i] != null){
+                    System.out.println(data.getSellers()[i].toString()); // Print each buyer's name
                 }else{
-                    i = data.sellers.length;
+                    i = data.getSellers().length;
                 }
             }
         } else {
@@ -155,6 +156,7 @@ public class Main {
         if (selection >= 0 && selection <= 7) {
             switch (selection) {
                 case 0: // Exit the program
+                    s.close();
                     isMainRunning = false;
                     break;
                 case 1: // Add seller to the sellers array

@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
 public class Buyer {
-    String name;
-    String passWord;
-    Address address = new Address();
-    Product[] products = new Product[0];
-    CartHistory[] PaymentHistory = new CartHistory[0];
+    private  String name;
+    private String passWord;
+    private Address address = new Address();
+    private Product[] products = new Product[0];
+    private CartHistory[] PaymentHistory = new CartHistory[0];
     private int arraySizeProduct=0;
     private int logicSizeProduct=0;
     private int arraySizePaymentHistory=0;
@@ -88,7 +88,7 @@ public class Buyer {
     double paymentPrice(){
         double sum = 0;
         for(int i = 0; i < products.length; i++){
-            sum = sum + products[i].price;
+            sum = sum + products[i].getPrice();
         }
         return sum;
     }

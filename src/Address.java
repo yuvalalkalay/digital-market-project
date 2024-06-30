@@ -1,7 +1,7 @@
 public class Address {
-    String city;
-    String street;
-    int houseNumber;
+    private String city;
+    private String street;
+    private int houseNumber;
 
     public Address(){
 

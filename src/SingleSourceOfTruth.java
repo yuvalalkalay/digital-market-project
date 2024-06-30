@@ -1,8 +1,8 @@
 import java.util.Arrays;
 
 public class SingleSourceOfTruth {
-    Buyer[] buyers = new Buyer[0];
-    Seller[] sellers = new Seller[0];
+    private Buyer[] buyers = new Buyer[0];
+    private Seller[] sellers = new Seller[0];
     private int logicSizeBuyers=0;
     private int arraySizeBuyers=0;
     private int logicSizeSellers=0;
@@ -78,7 +78,7 @@ public class SingleSourceOfTruth {
             if(buyers[i]==null) {
                 return false;
             }
-            if(buyers[i].name.equals(name)){
+            if(buyers[i].getName().equals(name)){
                 return true;
             }
         }
@@ -86,11 +86,11 @@ public class SingleSourceOfTruth {
     }
 
     boolean isSellerExist(String name){
-        for(int i = 0; i < buyers.length; i++){
+        for(int i = 0; i < sellers.length; i++){
             if(sellers[i]==null){
                 return false;
             }
-            if(sellers[i].name.equals(name)){
+            if(sellers[i].getName().equals(name)){
                 return true;
             }
         }

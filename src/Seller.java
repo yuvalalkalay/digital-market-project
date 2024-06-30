@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
 public class Seller {
-    String name;
-    String passWord;
-    Product[] products = new Product[0];
+    private String name;
+    private String passWord;
+    private Product[] products = new Product[0];
     private int arraySizeProduct=0;
     private int logicSizeProduct=0;
 

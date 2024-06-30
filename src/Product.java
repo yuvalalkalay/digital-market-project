@@ -1,6 +1,6 @@
 public class Product {
-    int price;
-    String name;
+    private int price;
+    private String name;
 
     public Product() {
     }
@@ -27,8 +27,7 @@ public class Product {
 
     @Override
     public String toString(){
-        return "Product: " + "\n" +
-                "name='" + name + '\'' + "\n" +
-                "price= '" + price + '\'' + "\n";
+        return "{name:'" + name + '\'' + "," +
+                "price:'" + price + '\''+ "}";
     }
 }

@@ -2,9 +2,9 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 public class CartHistory {
-    Product[] products = new Product[0];
-    LocalDate time = LocalDate.now();
-
+    private Product[] products = new Product[0];
+    private LocalDate time = LocalDate.now();
+    
     public CartHistory() {
     }
     public CartHistory(Product[] products) {
