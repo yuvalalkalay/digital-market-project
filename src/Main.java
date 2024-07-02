@@ -78,7 +78,15 @@ public class Main {
         int price = s.nextInt();
         s.nextLine();
 
-        Product newProduct = new Product(product, price);
+        System.out.println("enter the number of the category:");
+        System.out.println("1) Children");
+        System.out.println("2) Electricity");
+        System.out.println("3) Office");
+        System.out.println("4) Clothing");
+        int num = s.nextInt();
+        s.nextLine();
+        ProductType.Category[] categories = Category.values();
+        Product newProduct = new Product(product, price, categories[num - 1]);
         data.getSellers()[sellerNumber-1].addProduct(newProduct);
     }
 
