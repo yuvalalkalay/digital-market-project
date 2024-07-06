@@ -1,62 +1,43 @@
 import java.util.Arrays;
 
-public class Buyer {
-    private  String name;
-    private String passWord;
+public class Buyer extends Username implements Comparable<Buyer>{
     private Address address = new Address();
-    private Product[] products = new Product[0];
     private CartHistory[] PaymentHistory = new CartHistory[0];
-    private int arraySizeProduct=0;
-    private int logicSizeProduct=0;
     private int arraySizePaymentHistory=0;
     private int logicSizePaymentHistory=0;
+    private Product[] SpecialPackProd = new Product[0];
+    private int logicSizeSpecialProd=0;
+    private int arraySizeSpecialProd=0;
 
-    public Buyer(){
-
+    public Buyer() {
     }
-    public Buyer(String name, String passWord, Address address){
-        this.name = name;
-        this.passWord = passWord;
+    public Buyer(String name, String passWord, Address address) {
+        super(name, passWord);
         this.address = address;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassWord() {
-        return passWord;
     }
 
     public Address getAddress() {
         return address;
     }
 
-    public Product[] getProducts() {
-        return products;
+    public Product[] getSpecialPackProd() {
+        return SpecialPackProd;
+    }
+
+    public int getLogicSizeSpecialProd() {
+        return logicSizeSpecialProd;
     }
 
     public CartHistory[] getPaymentHistory() {
         return PaymentHistory;
     }
 
-    public boolean setName(String name) {
-        this.name = name;
-        return true;
-    }
-
-    public boolean setPassWord(String passWord) {
-        this.passWord = passWord;
-        return true;
+    public int getLogicSizePaymentHistory() {
+        return logicSizePaymentHistory;
     }
 
     public boolean setAddress(Address address) {
         this.address = address;
-        return true;
-    }
-
-    public boolean setProducts(Product[] products) {
-        this.products = products;
         return true;
     }
 
@@ -65,36 +46,35 @@ public class Buyer {
         return true;
     }
 
-    void addProduct(Product product){
-        if(arraySizeProduct == 0) {
-            products = Arrays.copyOf(products, arraySizeProduct + 1);
-            products[0] = product;
-            arraySizeProduct++;
-        }
-        else{
-            if(logicSizeProduct < arraySizeProduct){
-                products[logicSizeProduct] = product;
-
-            }
-            else {
-                products = Arrays.copyOf(products, arraySizeProduct * 2);
-                arraySizeProduct *= 2;
-                products[logicSizeProduct] = product;
-            }
-        }
-        logicSizeProduct++;
-    }
-
-    double paymentPrice(){
-        double sum = 0;
-        for(int i = 0; i < products.length; i++){
-            sum = sum + products[i].getPrice();
+    float paymentPrice(){
+        float sum = 0;
+        for(int i = 0; i < getLogicSizeProduct(); i++){
+            sum += getProducts()[i].getPrice();
         }
         return sum;
     }
 
-    void addPaymentHistory(Product[] products){
+    void addSpecialProdArr(Product product){
+        if(arraySizeSpecialProd == 0) {
+            SpecialPackProd = Arrays.copyOf(SpecialPackProd, arraySizeSpecialProd + 1);
+            SpecialPackProd[0] = product;
+            arraySizeSpecialProd++;
+        }
+        else{
+            if(logicSizeSpecialProd < arraySizeSpecialProd){
+                SpecialPackProd[logicSizeSpecialProd] = product;
 
+            }
+            else {
+                SpecialPackProd = Arrays.copyOf(SpecialPackProd, arraySizeSpecialProd * 2);
+                arraySizeSpecialProd *= 2;
+                SpecialPackProd[logicSizeSpecialProd] = product;
+            }
+        }
+        logicSizeSpecialProd++;
+    }
+
+    void addPaymentHistory(Product[] products){
         CartHistory history = new CartHistory(products);
         if(arraySizePaymentHistory == 0) {
             PaymentHistory = Arrays.copyOf(PaymentHistory, arraySizePaymentHistory + 1);
@@ -117,10 +97,15 @@ public class Buyer {
 
     @Override
     public String toString(){
-        return  "Buyer name='" + name + '\'' + "\n" +
-                "passWord='" + passWord + '\'' + "\n" +
-                "address='" + address + "\n" +
-                "products='" + Arrays.toString(products) + "\n" +
-                "PaymentHistory='" + Arrays.toString(PaymentHistory) + '\'' + "\n";
+        return  "Buyer name='" + getName() + '\'' + "\n" +
+                "passWord='" + getPassWord() + '\'' + "\n" +
+                "address='" + address +
+                "products=" + Arrays.toString(Arrays.copyOfRange(getProducts(), 0, getLogicSizeProduct())) + "\n" +
+                "PaymentHistory=" + Arrays.toString(Arrays.copyOfRange(PaymentHistory, 0, logicSizePaymentHistory));
+    }
+
+    @Override
+    public int compareTo(Buyer other) {
+        return this.getName().compareTo(other.getName());
     }
 }

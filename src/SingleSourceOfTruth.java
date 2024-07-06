@@ -7,6 +7,7 @@ public class SingleSourceOfTruth {
     private int arraySizeBuyers=0;
     private int logicSizeSellers=0;
     private int arraySizeSellers=0;
+    private float sum=0;
 
     public SingleSourceOfTruth() {
     }
@@ -21,6 +22,26 @@ public class SingleSourceOfTruth {
 
     public Seller[] getSellers() {
         return sellers;
+    }
+
+    public int getLogicSizeSellers() {
+        return logicSizeSellers;
+    }
+
+    public int getLogicSizeBuyers() {
+        return logicSizeBuyers;
+    }
+
+    public int getArraySizeBuyers() {
+        return arraySizeBuyers;
+    }
+
+    public int getArraySizeSellers() {
+        return arraySizeSellers;
+    }
+
+    public float getSum() {
+        return sum;
     }
 
     public boolean setBuyers(Buyer[] buyers) {
@@ -96,4 +117,9 @@ public class SingleSourceOfTruth {
         }
         return false;
     }
+
+    void sumOfPurchasedSpecPackProd(float ExtraPay){
+        this.sum = sum+ExtraPay;
+    }
+
 }

@@ -1,25 +1,38 @@
 import java.util.Random;
 
-public class Product extends ProductType{
+public class Product implements Comparable<Product>, Cloneable {
 
-    private int price;
+    public enum Category {
+        Children,
+        Electricity,
+        Office,
+        Clothing
+    }
+    private float price;
     private String name;
-    private final static int ID = new Random(1000000).nextInt();
+    private static int ID = 0;
     private Category category;
 
     public Product() {
     }
-    public Product(String name, int price, Category category) {
+    public Product(String name, float price, Category category) {
         this.price = price;
         this.name = name;
         this.category = category;
+        this.ID++;
     }
 
-    public static int getID() {
+    public Product(Product other) {
+        this.price = other.price;
+        this.name = other.name;
+        this.category = other.category;
+    }
+
+    public int getID() {
         return ID;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
@@ -27,7 +40,11 @@ public class Product extends ProductType{
         return name;
     }
 
-    public void setPrice(int price) {
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -39,13 +56,26 @@ public class Product extends ProductType{
         this.category = category;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
     @Override
     public String toString(){
         return "{name:'" + name + '\'' + "," +
-                "price:'" + price + '\''+ "}";
+                "price:'" + price + '\''+"," +
+                "type':"+category+ '\''+"}";
+    }
+
+    @Override
+    public Product clone() {
+        try {
+            Product clone = (Product) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+    @Override
+    public int compareTo(Product prod2) {
+        return this.ID - prod2.getID();
     }
 }
