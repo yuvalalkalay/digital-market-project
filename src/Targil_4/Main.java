@@ -164,7 +164,6 @@ public class Main extends GenericFunctions{
                 Product[] newCart = new Product[0];
                 data.getBuyers()[buyerNumber - 1].setProducts(Arrays.copyOf(newCart, 0));
                 data.getBuyers()[buyerNumber - 1].setLogicSizeProduct(0);
-                data.getBuyers()[buyerNumber - 1].setArraySizeProduct(0);
             }else{
                 throw new Exception("Your cart is EMPTY! please go add products and than come back to pay");
             }
@@ -246,7 +245,6 @@ public class Main extends GenericFunctions{
                 }
                 data.getBuyers()[index - 1].setProducts(newCart);
                 data.getBuyers()[index - 1].setLogicSizeProduct(count);
-                data.getBuyers()[index - 1].setArraySizeProduct(newCart.length);
             }else{
                 System.out.println("there haven't been any purchases in the Payment History yet");
             }

@@ -6,7 +6,6 @@ public class Username {
     private String name;
     private String passWord;
     private Product[] products = new Product[0];
-    private int arraySizeProduct=0;
     private int logicSizeProduct=0;
 
     public Username(){
@@ -30,10 +29,6 @@ public class Username {
         return products;
     }
 
-    public int getArraySizeProduct() {
-        return arraySizeProduct;
-    }
-
     public int getLogicSizeProduct() {
         return logicSizeProduct;
     }
@@ -52,29 +47,22 @@ public class Username {
         this.logicSizeProduct = logicSizeProduct;
     }
 
-    public void setArraySizeProduct(int arraySizeProduct) {
-        this.arraySizeProduct = arraySizeProduct;
-    }
-
     public boolean setProducts(Product[] product) {
         this.products = Arrays.copyOf(product,product.length);
         return true;
     }
 
     void addProduct(Product product){
-        if(arraySizeProduct == 0) {
-            products = Arrays.copyOf(products, arraySizeProduct + 1);
+        if(logicSizeProduct == 0) {
+            products = Arrays.copyOf(products, products.length + 1);
             products[0] = product;
-            arraySizeProduct++;
         }
         else{
-            if(logicSizeProduct < arraySizeProduct){
+            if(logicSizeProduct < products.length){
                 products[logicSizeProduct] = product;
-
             }
             else {
-                products = Arrays.copyOf(products, arraySizeProduct * 2);
-                arraySizeProduct *= 2;
+                products = Arrays.copyOf(products, products.length * 2);
                 products[logicSizeProduct] = product;
             }
         }

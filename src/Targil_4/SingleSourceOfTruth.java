@@ -6,9 +6,7 @@ public class SingleSourceOfTruth{
     private Buyer[] buyers = new Buyer[0];
     private Seller[] sellers = new Seller[0];
     private int logicSizeBuyers=0;
-    private int arraySizeBuyers=0;
     private int logicSizeSellers=0;
-    private int arraySizeSellers=0;
     private float sum=0;
 
     public SingleSourceOfTruth() {
@@ -34,14 +32,6 @@ public class SingleSourceOfTruth{
         return logicSizeBuyers;
     }
 
-    public int getArraySizeBuyers() {
-        return arraySizeBuyers;
-    }
-
-    public int getArraySizeSellers() {
-        return arraySizeSellers;
-    }
-
     public float getSum() {
         return sum;
     }
@@ -57,19 +47,16 @@ public class SingleSourceOfTruth{
     }
 
     void addBuyer(Buyer buyer){
-        if(arraySizeBuyers == 0) {
-            buyers = Arrays.copyOf(buyers, arraySizeBuyers + 1);
+        if(logicSizeBuyers == 0) {
+            buyers = Arrays.copyOf(buyers, buyers.length + 1);
             buyers[0] = buyer;
-            arraySizeBuyers++;
         }
         else{
-            if(logicSizeBuyers < arraySizeBuyers){
+            if(logicSizeBuyers < buyers.length){
                 buyers[logicSizeBuyers] = buyer;
-
             }
             else {
-                buyers = Arrays.copyOf(buyers, arraySizeBuyers * 2);
-                arraySizeBuyers *= 2;
+                buyers = Arrays.copyOf(buyers, buyers.length * 2);
                 buyers[logicSizeBuyers] = buyer;
             }
         }
@@ -77,19 +64,16 @@ public class SingleSourceOfTruth{
     }
 
     void addSeller(Seller seller){
-        if(arraySizeSellers == 0) {
-            sellers = Arrays.copyOf(sellers, arraySizeSellers + 1);
+        if(logicSizeSellers == 0) {
+            sellers = Arrays.copyOf(sellers, sellers.length + 1);
             sellers[0] = seller;
-            arraySizeSellers++;
         }
         else{
-            if(logicSizeSellers < arraySizeSellers){
+            if(logicSizeSellers < sellers.length){
                 sellers[logicSizeSellers] = seller;
-
             }
             else {
-                sellers = Arrays.copyOf(sellers, arraySizeSellers * 2);
-                arraySizeSellers *= 2;
+                sellers = Arrays.copyOf(sellers, sellers.length * 2);
                 sellers[logicSizeSellers] = seller;
             }
         }
@@ -97,7 +81,7 @@ public class SingleSourceOfTruth{
     }
 
     boolean isBuyerExist(String name){
-        for(int i = 0; i < buyers.length; i++){
+        for(int i = 0; i < logicSizeBuyers; i++){
             if(buyers[i]==null) {
                 return false;
             }
@@ -109,7 +93,7 @@ public class SingleSourceOfTruth{
     }
 
     boolean isSellerExist(String name){
-        for(int i = 0; i < sellers.length; i++){
+        for(int i = 0; i < logicSizeSellers; i++){
             if(sellers[i]==null){
                 return false;
             }

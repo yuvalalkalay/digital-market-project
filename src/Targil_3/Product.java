@@ -1,6 +1,6 @@
 package Targil_3;
 
-public class Product implements Comparable<Product>, Cloneable {
+public class Product {
 
     public enum Category {
         Children,
@@ -73,19 +73,4 @@ public class Product implements Comparable<Product>, Cloneable {
                 "type':"+category+ '\''+"}";
     }
 
-    @Override
-    public Product clone() {
-        try {
-            Product clone = (Product) super.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
-
-    @Override
-    public int compareTo(Product prod2) {
-        return this.ID - prod2.getID();
-    }
 }

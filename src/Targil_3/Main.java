@@ -182,7 +182,6 @@ public class Main{
             Product[] newCart = new Product[0];
             data.getBuyers()[buyerNumber - 1].setProducts(Arrays.copyOf(newCart, 0));
             data.getBuyers()[buyerNumber - 1].setLogicSizeProduct(0);
-            data.getBuyers()[buyerNumber - 1].setArraySizeProduct(0);
         }else {
             System.out.println("Your cart is EMPTY! please go add products and than come back to pay");
         }

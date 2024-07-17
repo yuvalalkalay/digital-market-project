@@ -5,7 +5,6 @@ import java.util.Arrays;
 public class Buyer extends Username implements Comparable<Buyer>{
     private Address address = new Address();
     private CartHistory[] PaymentHistory = new CartHistory[0];
-    private int arraySizePaymentHistory=0;
     private int logicSizePaymentHistory=0;
 
     public Buyer() {
@@ -48,19 +47,17 @@ public class Buyer extends Username implements Comparable<Buyer>{
 
     void addPaymentHistory(Product[] products){
         CartHistory history = new CartHistory(products);
-        if(arraySizePaymentHistory == 0) {
-            PaymentHistory = Arrays.copyOf(PaymentHistory, arraySizePaymentHistory + 1);
+        if(logicSizePaymentHistory == 0) {
+            PaymentHistory = Arrays.copyOf(PaymentHistory, PaymentHistory.length + 1);
             PaymentHistory[0] = history;
-            arraySizePaymentHistory++;
         }
         else{
-            if(logicSizePaymentHistory < arraySizePaymentHistory){
+            if(logicSizePaymentHistory < PaymentHistory.length){
                 PaymentHistory[logicSizePaymentHistory] = history;
 
             }
             else {
-                PaymentHistory = Arrays.copyOf(PaymentHistory, arraySizePaymentHistory * 2);
-                arraySizePaymentHistory *= 2;
+                PaymentHistory = Arrays.copyOf(PaymentHistory, PaymentHistory.length * 2);
                 PaymentHistory[logicSizePaymentHistory] = history;
             }
         }
