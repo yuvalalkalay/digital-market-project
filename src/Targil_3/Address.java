@@ -1,6 +1,7 @@
 package Targil_3;
 
 public class Address {
+    private String country;
     private String city;
     private String street;
     private int houseNumber;
@@ -8,7 +9,8 @@ public class Address {
     public Address(){
 
     }
-    public Address(String city, String street, int houseNumber){
+    public Address(String country, String city, String street, int houseNumber){
+        this.country = country;
         this.city = city;
         this.street = street;
         this.houseNumber = houseNumber;

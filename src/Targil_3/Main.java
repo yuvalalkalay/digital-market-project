@@ -26,21 +26,18 @@ public class Main{
             name = s.nextLine();
         }
 
-        String passWord;
-        String city;
-        String street;
-        int houseNumber;
-
         System.out.print("create password: ");
-        passWord = s.nextLine();
+        String passWord = s.nextLine();
         System.out.println("address");
+        System.out.print("enter country: ");
+        String country = s.nextLine();
         System.out.print("enter city: ");
-        city = s.nextLine();
+        String city = s.nextLine();
         System.out.print("enter street: ");
-        street = s.nextLine();
+        String street = s.nextLine();
         System.out.print("enter house number: ");
-        houseNumber = s.nextInt();
-        Address a = new Address(city, street, houseNumber);
+        int houseNumber = s.nextInt();
+        Address a = new Address(country, city, street, houseNumber);
         Buyer b = new Buyer(name, passWord, a);
         data.addBuyer(b);
     }
@@ -63,19 +60,25 @@ public class Main{
 
     // Function to add a product to a seller (implementation incomplete)
     static void addProductToSeller() {
-        ;
         for (int i = 1; i <= data.getLogicSizeSellers(); i++) {
             System.out.println(i + ") " + data.getSellers()[i - 1].getName());
         }
         System.out.print("enter the seller's number: ");
         int sellerNumber = s.nextInt();
+        while(sellerNumber<1 || sellerNumber>data.getLogicSizeSellers()){
+            System.out.print("Invalid input, the number must be between 1 to"+data.getLogicSizeSellers()+", try again: ");
+            sellerNumber = s.nextInt();
+        }
+        s.nextLine();
         System.out.print("Enter product name: ");
         String product = s.nextLine();
         System.out.print("Enter product price: ");
         float price = s.nextFloat();
+        s.nextLine();
         System.out.print("1) Children\n2) Electricity\n3) Office\n4) Clothing\n" +
                 "enter the number of the category: ");
         int index = s.nextInt();
+        s.nextLine();
         while(index<1 || index>4){
             System.out.print("Invalid input, the number must be between 1 to 4, try again: ");
             index = s.nextInt();
@@ -103,6 +106,7 @@ public class Main{
         }
         System.out.print("Enter buyer number: ");
         int buyerNumber = s.nextInt();
+        s.nextLine();
         while(buyerNumber<1 || buyerNumber>data.getLogicSizeBuyers()){
             System.out.print("Invalid input, the number must be between 1 to "+data.getLogicSizeBuyers());
             buyerNumber = s.nextInt();
@@ -120,6 +124,7 @@ public class Main{
         } else {
             System.out.print("enter the seller's number: ");
             int sellerNumber = s.nextInt();
+            s.nextLine();
             while(sellerNumber<1 || sellerNumber>counter){
                 System.out.print("Invalid input, the number must be between 1 to "+counter+
                         ", try again: ");
@@ -130,6 +135,7 @@ public class Main{
             }
             System.out.print("enter product number: ");
             int productNumber = s.nextInt();
+            s.nextLine();
             while(productNumber<1 || productNumber>temp[sellerNumber-1].getLogicSizeProduct()){
                 System.out.print("Invalid input, the number must be between 1 to "+temp[sellerNumber-1].getLogicSizeProduct()+
                         ", try again: ");
@@ -168,6 +174,7 @@ public class Main{
         }
         System.out.print("Enter buyer number for payment: ");
         int buyerNumber = s.nextInt();
+        s.nextLine();
         while (buyerNumber<1 || buyerNumber>data.getLogicSizeBuyers()){
             System.out.print("Invalid input, the number must be between 1 to "+data.getLogicSizeBuyers()+
                     ", try again: ");
@@ -216,6 +223,7 @@ public class Main{
         System.out.println("1) Children\n2) Electricity\n3) Office\n4) Clothing\n" +
                 "enter the number of the category: ");
         int index = s.nextInt();
+        s.nextLine();
         while(index<1 || index>4){
             System.out.println("Invalid input, the number must be between 1 to 4");
             index = s.nextInt();
