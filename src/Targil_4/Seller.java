@@ -1,3 +1,5 @@
+package Targil_4;
+
 import java.util.Arrays;
 
 public class Seller extends Username implements Comparable<Seller>{
@@ -10,8 +12,10 @@ public class Seller extends Username implements Comparable<Seller>{
 
     @Override
     public String toString(){
-        return  "seller name='" + getName() + '\'' + "\n" +
-                "passWord='" + getPassWord() + '\'';
+        return  "seller Info:\n"+
+                "name='" + getName() + '\'' + "\n" +
+                "passWord='" + getPassWord() + '\''+"\n"+
+                "products=" + Arrays.toString(Arrays.copyOfRange(getProducts(), 0, getLogicSizeProduct()));
     }
 
     @Override

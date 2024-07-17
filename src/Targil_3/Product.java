@@ -1,4 +1,4 @@
-import java.util.Random;
+package Targil_3;
 
 public class Product implements Comparable<Product>, Cloneable {
 
@@ -12,13 +12,15 @@ public class Product implements Comparable<Product>, Cloneable {
     private String name;
     private static int ID = 0;
     private Category category;
+    private boolean isSpecialProd = false;
 
     public Product() {
     }
-    public Product(String name, float price, Category category) {
+    public Product(String name, float price, Category category, boolean isSpecialProd) {
         this.price = price;
         this.name = name;
         this.category = category;
+        this.isSpecialProd = isSpecialProd;
         this.ID++;
     }
 
@@ -44,6 +46,10 @@ public class Product implements Comparable<Product>, Cloneable {
         return category;
     }
 
+    public boolean getisSpecialProd() {
+        return isSpecialProd;
+    }
+
     public void setPrice(float price) {
         this.price = price;
     }
@@ -54,6 +60,10 @@ public class Product implements Comparable<Product>, Cloneable {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public void setSpecialProd(boolean specialProd) {
+        isSpecialProd = specialProd;
     }
 
     @Override

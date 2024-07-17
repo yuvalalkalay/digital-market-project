@@ -1,3 +1,5 @@
+package Targil_4;
+
 import java.util.Arrays;
 
 public class Buyer extends Username implements Comparable<Buyer>{
@@ -5,9 +7,6 @@ public class Buyer extends Username implements Comparable<Buyer>{
     private CartHistory[] PaymentHistory = new CartHistory[0];
     private int arraySizePaymentHistory=0;
     private int logicSizePaymentHistory=0;
-    private Product[] SpecialPackProd = new Product[0];
-    private int logicSizeSpecialProd=0;
-    private int arraySizeSpecialProd=0;
 
     public Buyer() {
     }
@@ -20,13 +19,6 @@ public class Buyer extends Username implements Comparable<Buyer>{
         return address;
     }
 
-    public Product[] getSpecialPackProd() {
-        return SpecialPackProd;
-    }
-
-    public int getLogicSizeSpecialProd() {
-        return logicSizeSpecialProd;
-    }
 
     public CartHistory[] getPaymentHistory() {
         return PaymentHistory;
@@ -52,26 +44,6 @@ public class Buyer extends Username implements Comparable<Buyer>{
             sum += getProducts()[i].getPrice();
         }
         return sum;
-    }
-
-    void addSpecialProdArr(Product product){
-        if(arraySizeSpecialProd == 0) {
-            SpecialPackProd = Arrays.copyOf(SpecialPackProd, arraySizeSpecialProd + 1);
-            SpecialPackProd[0] = product;
-            arraySizeSpecialProd++;
-        }
-        else{
-            if(logicSizeSpecialProd < arraySizeSpecialProd){
-                SpecialPackProd[logicSizeSpecialProd] = product;
-
-            }
-            else {
-                SpecialPackProd = Arrays.copyOf(SpecialPackProd, arraySizeSpecialProd * 2);
-                arraySizeSpecialProd *= 2;
-                SpecialPackProd[logicSizeSpecialProd] = product;
-            }
-        }
-        logicSizeSpecialProd++;
     }
 
     void addPaymentHistory(Product[] products){
@@ -100,7 +72,7 @@ public class Buyer extends Username implements Comparable<Buyer>{
         return  "Buyer name='" + getName() + '\'' + "\n" +
                 "passWord='" + getPassWord() + '\'' + "\n" +
                 "address='" + address +
-                "products=" + Arrays.toString(Arrays.copyOfRange(getProducts(), 0, getLogicSizeProduct())) + "\n" +
+                "Cart=" + Arrays.toString(Arrays.copyOfRange(getProducts(), 0, getLogicSizeProduct())) + "\n" +
                 "PaymentHistory=" + Arrays.toString(Arrays.copyOfRange(PaymentHistory, 0, logicSizePaymentHistory));
     }
 

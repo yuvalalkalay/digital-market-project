@@ -1,6 +1,8 @@
+package Targil_4;
+
 import java.util.Arrays;
 
-public class SingleSourceOfTruth {
+public class SingleSourceOfTruth{
     private Buyer[] buyers = new Buyer[0];
     private Seller[] sellers = new Seller[0];
     private int logicSizeBuyers=0;
@@ -116,10 +118,6 @@ public class SingleSourceOfTruth {
             }
         }
         return false;
-    }
-
-    void sumOfPurchasedSpecPackProd(float ExtraPay){
-        this.sum = sum+ExtraPay;
     }
 
 }

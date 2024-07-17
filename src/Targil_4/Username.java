@@ -1,3 +1,5 @@
+package Targil_4;
+
 import java.util.Arrays;
 
 public class Username {
@@ -78,5 +80,7 @@ public class Username {
         }
         logicSizeProduct++;
     }
+
+
 
 }

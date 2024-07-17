@@ -1,0 +1,299 @@
+package Targil_3;// name: Yuval Alkalay  id: 207962770
+// name: Almog Dinur    id: 211627054
+// we are both in pini shlomi's class
+
+import Targil_4.GenericFunctions;
+
+import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Main{
+    // Flag to keep the main loop running
+    static boolean isMainRunning = true;
+    static SingleSourceOfTruth data = new SingleSourceOfTruth();
+    static Scanner s = new Scanner(System.in);
+
+    // Function to add a new buyer to the system
+    static void addBuyer() {
+        String name;
+        System.out.print("Enter buyer name: ");
+        name = s.nextLine();
+
+        while (data.isBuyerExist(name)) { // Loop to ensure a unique buyer name is entered
+            System.out.println("The name you chose exists in the system");
+            System.out.println("Enter buyer name: ");
+            name = s.nextLine();
+        }
+
+        String passWord;
+        String city;
+        String street;
+        int houseNumber;
+
+        System.out.print("create password: ");
+        passWord = s.nextLine();
+        System.out.println("address");
+        System.out.print("enter city: ");
+        city = s.nextLine();
+        System.out.print("enter street: ");
+        street = s.nextLine();
+        System.out.print("enter house number: ");
+        houseNumber = s.nextInt();
+        Address a = new Address(city, street, houseNumber);
+        Buyer b = new Buyer(name, passWord, a);
+        data.addBuyer(b);
+    }
+
+    // Function to add a new seller to the system
+    static void addSeller() {
+        String name;
+        System.out.print("Enter seller name: ");
+        name = s.nextLine();
+        while (data.isSellerExist(name)) { // Loop to ensure a unique buyer name is entered
+            System.out.println("The name you chose exists in the system");
+            System.out.println("Enter seller name: ");
+            name = s.nextLine();
+        }
+        System.out.print("create password: ");
+        String passWord = s.nextLine();
+        Seller seller = new Seller(name, passWord);
+        data.addSeller(seller);
+    }
+
+    // Function to add a product to a seller (implementation incomplete)
+    static void addProductToSeller() {
+        ;
+        for (int i = 1; i <= data.getLogicSizeSellers(); i++) {
+            System.out.println(i + ") " + data.getSellers()[i - 1].getName());
+        }
+        System.out.print("enter the seller's number: ");
+        int sellerNumber = s.nextInt();
+        System.out.print("Enter product name: ");
+        String product = s.nextLine();
+        System.out.print("Enter product price: ");
+        float price = s.nextFloat();
+        System.out.print("1) Children\n2) Electricity\n3) Office\n4) Clothing\n" +
+                "enter the number of the category: ");
+        int index = s.nextInt();
+        while(index<1 || index>4){
+            System.out.print("Invalid input, the number must be between 1 to 4, try again: ");
+            index = s.nextInt();
+        }
+        Product.Category[] categories = Product.Category.values();
+        System.out.print("do you wish to sell this product in a special packaging? yes/no: ");
+        String answer = s.nextLine();
+        if (answer.equals("yes")) {
+            System.out.print("what is your price for the special packaging? ");
+            float extraPay = s.nextFloat();
+            SpecialPackProd newProduct = new SpecialPackProd(product, price, categories[index - 1],false, extraPay);
+            data.getSellers()[sellerNumber - 1].addProduct(newProduct);
+        } else {
+            Product newProduct = new Product(product, price, categories[index - 1], false);
+            data.getSellers()[sellerNumber - 1].addProduct(newProduct);
+        }
+    }
+
+    // Function to add a product to a buyer (implementation incomplete)
+    static void addProductToBuyer() {
+        int counter = 0;
+        Seller[] temp = new Seller[0];
+        for (int i = 1; i <= data.getLogicSizeBuyers(); i++) {
+            System.out.println(i + ") " + data.getBuyers()[i - 1].getName());
+        }
+        System.out.print("Enter buyer number: ");
+        int buyerNumber = s.nextInt();
+        while(buyerNumber<1 || buyerNumber>data.getLogicSizeBuyers()){
+            System.out.print("Invalid input, the number must be between 1 to "+data.getLogicSizeBuyers());
+            buyerNumber = s.nextInt();
+        }
+        for (int i = 1; i <= data.getLogicSizeSellers(); i++) {//prints only the sellers that have products to sell
+            if (data.getSellers()[i - 1].getLogicSizeProduct() != 0) {
+                counter++;
+                System.out.println(counter + ") " + data.getSellers()[i - 1].getName());
+                temp = Arrays.copyOf(temp, counter);
+                temp[counter - 1] = data.getSellers()[i - 1];
+            }
+        }
+        if (counter == 0) {
+            System.out.println("Error: there are no sellers who got initiated with products yet");
+        } else {
+            System.out.print("enter the seller's number: ");
+            int sellerNumber = s.nextInt();
+            while(sellerNumber<1 || sellerNumber>counter){
+                System.out.print("Invalid input, the number must be between 1 to "+counter+
+                        ", try again: ");
+                sellerNumber = s.nextInt();
+            }
+            for (int i = 1; i <= temp[sellerNumber-1].getLogicSizeProduct(); i++) {
+                System.out.println(i + ") " + temp[sellerNumber - 1].getProducts()[i - 1].getName() + " " + temp[sellerNumber - 1].getProducts()[i - 1].getPrice() + "$");
+            }
+            System.out.print("enter product number: ");
+            int productNumber = s.nextInt();
+            while(productNumber<1 || productNumber>temp[sellerNumber-1].getLogicSizeProduct()){
+                System.out.print("Invalid input, the number must be between 1 to "+temp[sellerNumber-1].getLogicSizeProduct()+
+                        ", try again: ");
+                productNumber = s.nextInt();
+            }
+            if (temp[sellerNumber - 1].getProducts()[productNumber - 1] instanceof SpecialPackProd) {
+                System.out.print("the product: '" + temp[sellerNumber - 1].getProducts()[productNumber - 1].getName() +
+                        "' can be packed in a special package,\n" + "would you like to pay " +
+                        ((SpecialPackProd) temp[sellerNumber - 1].getProducts()[productNumber - 1]).getExtraPay() +
+                        " for the special package?\ntype yes/no: ");
+                String answer = s.nextLine();
+                Product p = data.getSellers()[sellerNumber - 1].getProducts()[productNumber - 1];
+                if (answer.equals("yes")) {
+                    float FinalPay = ((SpecialPackProd) temp[sellerNumber - 1].getProducts()[productNumber - 1]).getExtraPay() +
+                            temp[sellerNumber - 1].getProducts()[productNumber - 1].getPrice();
+                    System.out.println("your total price for the product '"+
+                            temp[sellerNumber - 1].getProducts()[productNumber - 1].getName() +
+                            "' is: "+FinalPay+"$");
+                    p.setSpecialProd(true);
+                }
+                data.getBuyers()[buyerNumber - 1].addProduct(p);
+            }
+            else{
+                Product p = data.getSellers()[sellerNumber - 1].getProducts()[productNumber - 1];
+                data.getBuyers()[buyerNumber - 1].addProduct(p);
+            }
+        }
+    }
+
+    // Function to process payment for a buyer (implementation incomplete)
+    static void payment() {
+        String answer;
+        float sum = 0;
+        for (int i = 1; i <= data.getLogicSizeBuyers(); i++) {
+            System.out.println(i + ") " + data.getBuyers()[i - 1].getName());
+        }
+        System.out.print("Enter buyer number for payment: ");
+        int buyerNumber = s.nextInt();
+        while (buyerNumber<1 || buyerNumber>data.getLogicSizeBuyers()){
+            System.out.print("Invalid input, the number must be between 1 to "+data.getLogicSizeBuyers()+
+                    ", try again: ");
+            buyerNumber = s.nextInt();
+        }
+        if(data.getBuyers()[buyerNumber-1].getLogicSizeProduct()!=0) {
+            System.out.println("buyer name: " + data.getBuyers()[buyerNumber - 1].getName());
+            sum = data.getSum()+data.getBuyers()[buyerNumber - 1].paymentPrice();
+            System.out.println("your total payment is: " + sum + "$");
+            Product[] cart = data.getBuyers()[buyerNumber - 1].getProducts();
+            data.getBuyers()[buyerNumber - 1].addPaymentHistory(cart);
+            Product[] newCart = new Product[0];
+            data.getBuyers()[buyerNumber - 1].setProducts(Arrays.copyOf(newCart, 0));
+            data.getBuyers()[buyerNumber - 1].setLogicSizeProduct(0);
+            data.getBuyers()[buyerNumber - 1].setArraySizeProduct(0);
+        }else {
+            System.out.println("Your cart is EMPTY! please go add products and than come back to pay");
+        }
+    }
+
+    // Function to display all buyers' data
+    static void showBuyersData() {
+        if (data.getLogicSizeBuyers() > 0) { // Check if there are any buyers
+            for (int i =0; i<data.getLogicSizeBuyers(); i++) {
+                System.out.println("\n"+data.getBuyers()[i].toString()); // Print each Buyer's info
+            }
+            System.out.println();
+        } else {
+            System.out.println("No buyer yet.");
+        }
+    }
+
+    // Function to display all sellers' data
+    static void showSellersData() {
+        if (data.getLogicSizeSellers() > 0) { // Check if there are any seller's
+            for (int i =0; i<data.getLogicSizeSellers(); i++) {
+                System.out.println("\n"+data.getSellers()[i].toString()); // Print each seller's info
+            }
+            System.out.println();
+        } else {
+            System.out.println("No seller yet.");
+        }
+    }
+
+    static void printAllProductByType() {
+        int count =0;
+        System.out.println("1) Children\n2) Electricity\n3) Office\n4) Clothing\n" +
+                "enter the number of the category: ");
+        int index = s.nextInt();
+        while(index<1 || index>4){
+            System.out.println("Invalid input, the number must be between 1 to 4");
+            index = s.nextInt();
+        }
+        Product.Category[] categories = Product.Category.values();
+        for (int i = 0; i < data.getLogicSizeSellers(); i++) {
+            for (int j = 0; j < data.getSellers()[i].getLogicSizeProduct(); j++) {
+                if (data.getSellers()[i].getProducts()[j].getCategory() == categories[index - 1]) {
+                    System.out.println(data.getSellers()[i].getProducts()[j].toString());
+                    count++;
+                }
+            }
+        }
+        if(count==0){
+            System.out.println("there aren't any products from the type you chose");
+        }
+    }
+
+    // Function to handle user menu selection and perform corresponding operations
+    static void operation(int selection) {
+        switch (selection) {
+            case 0: // Exit the program
+                s.close();
+                isMainRunning = false;
+                break;
+            case 1: // Add seller to the sellers array
+                addSeller();
+                break;
+            case 2: // Add buyer to the buyers array
+                addBuyer();
+                break;
+            case 3: // Add product to seller
+                addProductToSeller();
+                break;
+            case 4: // Add product to buyer
+                addProductToBuyer();
+                break;
+            case 5: // Process payment for buyer
+                payment();
+                break;
+            case 6: // Show all buyers' information
+                showBuyersData();
+                break;
+            case 7: // Show all sellers' information
+                showSellersData();
+                break;
+            case 8:
+                printAllProductByType();
+                break;
+        }
+    }
+
+    // name: Yuval Alkalay  id: 207962770
+// name: Almog Dinur    id: 211627054
+    // save. function to display the menu and take user input for operations
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        while (isMainRunning) {
+                // Display menu options
+                System.out.println("0 : Exit");
+                System.out.println("1 : Add seller");
+                System.out.println("2 : Add buyer");
+                System.out.println("3 : Add product to seller");
+                System.out.println("4 : Add product to buyer");
+                System.out.println("5 : Payment for buyer");
+                System.out.println("6 : Show all buyer's information");
+                System.out.println("7 : Show all seller's information");
+                System.out.println("8 : Show all products by type");
+                System.out.print("Please enter a number of selection from the menu: ");
+
+                // Get user's menu selection
+                int select = s.nextInt();
+                while(select<0 || select>9){
+                    System.out.println("Invalid input, the number must be between 0 to 8");
+                    select = s.nextInt();
+                }
+                operation(select);// Perform operation based on user's selection
+        }
+    }
+}
